@@ -6,29 +6,25 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-import com.influxdb.client.InfluxDBClientFactory;
-
-import io.qiot.manufacturing.datacenter.eventcollector.domain.PollutionTelemetry;
-import io.quarkus.runtime.ShutdownEvent;
+import io.qiot.manufacturing.commons.service.persistence.events.AbstractTimeseriesRepository;
+import io.qiot.manufacturing.datacenter.commons.domain.events.production.StageProductionValidationTelemetryDTO;
 import io.quarkus.runtime.StartupEvent;
 
+/**
+ * The Class RepositoryImpl.
+ */
 @ApplicationScoped
-public class RepositoryImpl extends AbstractRepository<PollutionTelemetry> {
-
+public class RepositoryImpl extends
+        AbstractTimeseriesRepository<StageProductionValidationTelemetryDTO> {
 
     @Inject
     Logger LOGGER;
     
     void onStart(@Observes StartupEvent ev) {
-        LOGGER.info("Connecting to: {}, token: {}, org: {}, bucketId: {}",
-                connectionUrl, token, orgId, bucketId);
-        influxDBClient = InfluxDBClientFactory.create(connectionUrl,
-                token.toCharArray(), orgId, bucketId);
-        LOGGER.info("Connection health-check:\n{}",
-                influxDBClient.health().toString());
+        super.onStart();
     }
-
-    void onStop(@Observes ShutdownEvent ev) {
-        influxDBClient.close();
+    
+    protected void onStop() {
+        super.onStop();
     }
 }

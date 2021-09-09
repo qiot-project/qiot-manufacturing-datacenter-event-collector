@@ -9,10 +9,9 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-import io.qiot.manufacturing.datacenter.eventcollector.domain.PollutionTelemetry;
-import io.qiot.manufacturing.datacenter.eventcollector.exception.DataServiceException;
+import io.qiot.manufacturing.datacenter.commons.domain.events.production.StageProductionValidationTelemetryDTO;
+import io.qiot.manufacturing.datacenter.commons.exception.DataServiceException;
 import io.qiot.manufacturing.datacenter.eventcollector.persistence.RepositoryImpl;
-import io.qiot.manufacturing.datacenter.eventcollector.pollution.util.event.MeasurementReceived;
 
 /**
  * @author andreabattaglia
@@ -26,8 +25,8 @@ public class DataStoreServiceImpl {
     @Inject
     RepositoryImpl repository;
 
-    void HandleIncomingMessage(
-            @Observes PollutionTelemetry pm)
+    void handleIncomingMessage(
+            @Observes StageProductionValidationTelemetryDTO pm)
             throws DataServiceException {
         LOGGER.info("Received internal event with content {}", pm);
         repository.save(pm);

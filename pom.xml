@@ -5,15 +5,37 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.qiot.manufacturing.datacenter</groupId>
-    <artifactId>event-collector-service</artifactId>
+    <artifactId>event-collector</artifactId>
+    <version>1.0.0.alpha7-SNAPSHOT</version>
     <parent>
         <groupId>io.qiot.manufacturing</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0.alpha7-SNAPSHOT</version>
     </parent>
-    <properties>
-        <influxdb.version>3.2.0</influxdb.version>
-    </properties>
+    <scm>
+        <connection>scm:git:https://github.com/qiot-project/qiot-manufacturing-datacenter-plant-manager.git</connection>
+        <developerConnection>scm:git:https://github.com/qiot-project/qiot-manufacturing-datacenter-plant-manager.git/</developerConnection>
+        <url>https://github.com/qiot-project/qiot-manufacturing-datacenter-plant-manager</url>
+        <tag>HEAD</tag>
+    </scm>
+    <repositories>
+        <repository>
+            <id>qiot-central</id>
+            <name>a0lz61zjcqpyh-artifactory-primary-0-releases</name>
+            <url>https://qiotproject.jfrog.io/artifactory/qiot-libs-release-local</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>qiot-snapshots</id>
+            <name>a0lz61zjcqpyh-artifactory-primary-0-snapshots</name>
+            <url>https://qiotproject.jfrog.io/artifactory/qiot-libs-snapshot-local</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -31,34 +53,35 @@
         <dependency>
             <groupId>io.qiot.manufacturing.all</groupId>
             <artifactId>domain-model</artifactId>
-            <!-- <version>1.0.0-SNAPSHOT</version> -->
+            <version>1.0.0.alpha7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.qiot.manufacturing.datacenter</groupId>
             <artifactId>domain-model</artifactId>
-            <!-- <version>1.0.0-SNAPSHOT</version> -->
+            <version>1.0.0.alpha7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.qiot.manufacturing.all</groupId>
             <artifactId>utilities</artifactId>
-            <!-- <version>1.0.0-SNAPSHOT</version> -->
+            <version>1.0.0.alpha7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.qiot.manufacturing.datacenter</groupId>
             <artifactId>utilities</artifactId>
-            <!-- <version>1.0.0-SNAPSHOT</version> -->
+            <version>1.0.0.alpha7-SNAPSHOT</version>
         </dependency>
-        <!-- DATA -->
+        <!-- DATA - TIMESERIES -->
         <dependency>
             <groupId>com.influxdb</groupId>
             <artifactId>influxdb-client-java</artifactId>
-            <version>${influxdb.version}</version>
+            <version>${influxdb.client.version}</version>
         </dependency>
         <dependency>
             <groupId>com.influxdb</groupId>
             <artifactId>flux-dsl</artifactId>
-            <version>${influxdb.version}</version>
+            <version>${influxdb.client.version}</version>
         </dependency>
+<!--         VALIDATION -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-validator</artifactId>
