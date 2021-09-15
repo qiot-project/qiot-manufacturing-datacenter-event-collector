@@ -9,11 +9,16 @@ import org.slf4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.qiot.manufacturing.datacenter.commons.domain.events.production.StageProductionValidationTelemetryDTO;
-import io.qiot.manufacturing.datacenter.commons.exception.telemetry.TelemetryDataValidationException;
+import io.qiot.manufacturing.datacenter.commons.domain.telemetry.production.StageProductionValidationTelemetryDTO;
+import io.qiot.manufacturing.datacenter.commons.exception.telemetry.TelemetryTransformationException;
 
+/**
+ * @author andreabattaglia
+ *
+ */
 @ApplicationScoped
-public class ProductionTelemetryStreamConsumer {
+public class ProductionTelemetryStreamConsumer extends
+        AbstractTelemetryStreamConsumer<StageProductionValidationTelemetryDTO> {
 
     @Inject
     Logger LOGGER;
@@ -38,11 +43,17 @@ public class ProductionTelemetryStreamConsumer {
     // measurementReceivedEvent.fire(pm);
     // }
 
+    @Override
     @Incoming("telemetryproduction")
-    public void process(StageProductionValidationTelemetryDTO data)
-            throws TelemetryDataValidationException {
+    public void process(String telemetryJson)
+            throws TelemetryTransformationException {
         LOGGER.info("Consumed message {} from the Prosuction Telemetry Stream",
-                data);
-        measurementReceivedEvent.fire(data);
+                telemetryJson);
+        measurementReceivedEvent.fire(deserialize(telemetryJson));
+    }
+
+    @Override
+    Class<StageProductionValidationTelemetryDTO> getTelemetryClass() {
+        return StageProductionValidationTelemetryDTO.class;
     }
 }

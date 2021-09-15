@@ -6,8 +6,8 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
-import io.qiot.manufacturing.commons.service.persistence.events.AbstractTimeseriesRepository;
-import io.qiot.manufacturing.datacenter.commons.domain.events.production.StageProductionValidationTelemetryDTO;
+import io.qiot.manufacturing.datacenter.commons.domain.telemetry.production.StageProductionValidationTelemetryDTO;
+import io.qiot.manufacturing.datacenter.commons.service.persistence.events.AbstractTimeseriesRepository;
 import io.quarkus.runtime.StartupEvent;
 
 /**
