@@ -10,15 +10,13 @@ import org.slf4j.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.qiot.manufacturing.datacenter.commons.domain.telemetry.production.StageProductionValidationTelemetryDTO;
-import io.qiot.manufacturing.datacenter.commons.exception.telemetry.TelemetryTransformationException;
 
 /**
  * @author andreabattaglia
  *
  */
 @ApplicationScoped
-public class ProductionTelemetryStreamConsumer extends
-        AbstractTelemetryStreamConsumer<StageProductionValidationTelemetryDTO> {
+public class ProductionTelemetryStreamConsumer {
 
     @Inject
     Logger LOGGER;
@@ -29,31 +27,11 @@ public class ProductionTelemetryStreamConsumer extends
     @Inject
     Event<StageProductionValidationTelemetryDTO> measurementReceivedEvent;
 
-    // @Incoming("pollution")
-    // public void process(String data) throws TelemetryDataValidationException
-    // {
-    // LOGGER.info("Consumed message {} from the POLLUTION Stream", data);
-    // // PollutionTelemetry gm = converter.jsonToMeasurement(data);
-    // PollutionTelemetry pm;
-    // try {
-    // pm = MAPPER.readValue(data, PollutionTelemetry.class);
-    // } catch (Exception e) {
-    // throw new TelemetryDataValidationException(e);
-    // }
-    // measurementReceivedEvent.fire(pm);
-    // }
-
-    @Override
     @Incoming("telemetryproduction")
-    public void process(String telemetryJson)
-            throws TelemetryTransformationException {
-        LOGGER.info("Consumed message {} from the Prosuction Telemetry Stream",
-                telemetryJson);
-        measurementReceivedEvent.fire(deserialize(telemetryJson));
+    public void process(StageProductionValidationTelemetryDTO telemetry) {
+        LOGGER.info("Consumed message from the Production Telemetry stream: {}",
+                telemetry);
+        measurementReceivedEvent.fire(telemetry);
     }
 
-    @Override
-    Class<StageProductionValidationTelemetryDTO> getTelemetryClass() {
-        return StageProductionValidationTelemetryDTO.class;
-    }
 }
