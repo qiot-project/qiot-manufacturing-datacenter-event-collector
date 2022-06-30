@@ -37,6 +37,9 @@ jobs:
   call-test-feature-build:
 #    environment: development
     uses: andreabattaglia/reusable-workflows/.github/workflows/test-feature.yml@main
+    # To pass named inputs to a called workflow, use the "with" keyword in a job.
+    with:
+      JVM: true
     # Use the "secrets" keyword to pass named secrets.
     secrets:
       ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
