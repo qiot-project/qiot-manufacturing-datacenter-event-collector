@@ -31,12 +31,13 @@ jobs:
     with:
       TAG_NAME: ${{ github.ref_name }}
       IMAGE_VERSION: ${{needs.define-variables.outputs.output1}}
+      JVM: true
     # Use the "secrets" keyword to pass named secrets.
     secrets:
       ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
       ARTIFACTORY_TOKEN: ${{ secrets.ARTIFACTORY_TOKEN }}
-      QUAY_USERNAME: ${{ secrets.QUAY_ALL_USERNAME }}
-      QUAY_PASSWORD: ${{ secrets.QUAY_ALL_PASSWORD }}
+      QUAY_USERNAME: ${{ secrets.QUAY_MANUFACTURING_USERNAME }}
+      QUAY_PASSWORD: ${{ secrets.QUAY_MANUFACTURING_PASSWORD }}
     # Workflows that call reusable workflows in the same organization or enterprise
     #  can use the "inherit" keyword to implicitly pass the secrets.
       # secrets: inherit
